@@ -77,7 +77,10 @@ public class CasualProxy extends ProxyHelper implements Loader {
         init();
         loadConfig();
         loadCommands();
-
+        final Thread t = new TabThread();
+        t.start();
+        final Thread t2 = new MSUpdateThread();
+        t2.start();
         this.server = new Server("0.0.0.0", 25565, MinecraftProtocol.class, new TcpSessionFactory());
         this.server.bind();
 
@@ -130,10 +133,6 @@ public class CasualProxy extends ProxyHelper implements Loader {
                 p.setSessionConnect(null);
                 p.setLastPacketMs(0L);
                 p.setLastPacket("&cRozlaczono");
-                final Thread t = new TabThread();
-                t.start();
-                final Thread t2 = new MSUpdateThread();
-                t2.start();
                 players.add(session);
                 p.sendMessage(String.valueOf(getChars()));
                 p.sendMessage("$p &7Zaloguj sie uzywajac: &a,login [haslo]");
@@ -176,8 +175,7 @@ public class CasualProxy extends ProxyHelper implements Loader {
                 final GameProfile[] profiles = {new GameProfile(UUID.randomUUID(),
                         ChatUtilities.fixColor("&7Autor proxy: &ayooniks\n\n&8>> &7Lista aktywnych socks do 400ms: " +
                                 "&a" + ProxyManager.proxies.size() + "&8/&c" + ProxyManager.allproxies + " \n" +
-                                "\n&8>> &7Crasherki NBT i wiecej\n&8>> &7Bardzo szybkie boty, macro, mother," +
-                                " pelno ustawien do botow itd."))};
+                                "\n&8>> &7Darmowa wersja proxy\n&cWersja premium do kupna, discord: 'yooniks //sraka squad#9012' "))};
 
                 return new ServerStatusInfo(new VersionInfo("§2§lCasual§a§lProxy                 " +
                         "   §7Online: §a" + players.size() + " ", 48),
