@@ -45,7 +45,7 @@ import java.net.InetSocketAddress;
 public class ConnectCommand extends Command {
 
     public ConnectCommand() {
-        super("connect", "Dolacz na serwer!", ",connect [serwer:port] [nick] [proxy/none/random] [ping] [srvresolver, true/false]", Group.GRACZ, "join", "polacz");
+        super("connect", "RENDER-PROXY Dolacz na serwer!", ",connect [serwer:port] [nick] [proxy/none/random] [ping] [srvresolver, true/false]", Group.GRACZ, "join", "polacz");
     }
 
     @Override
@@ -63,14 +63,14 @@ public class ConnectCommand extends Command {
                 proxy = new java.net.Proxy(java.net.Proxy.Type.SOCKS,
                         new InetSocketAddress(args[3].split(":")[0],
                                 Integer.valueOf(args[3].split(":")[1])));
-                p.sendMessage("$p &7Ip proxy: &aspecified&7 &8(&7" + proxy.address().toString().split(":")[0] + ":"
+                p.sendMessage("$p &7RENDER-PROXY Ip proxy: &aspecified&7 &8(&7" + proxy.address().toString().split(":")[0] + ":"
                         + proxy.address().toString().split(":")[1] + "&8)");
             } else if (args[3].contains("random") || args[3].contains("top")) {
                 proxy = ProxyManager.getRandomProxy();
-                p.sendMessage("$p &7Ip proxy: &arandom&7 &8(&7" + proxy.address().toString().split(":")[0] + ":"
+                p.sendMessage("$p &7RENDER-PROXY Ip proxy: &arandom&7 &8(&7" + proxy.address().toString().split(":")[0] + ":"
                         + proxy.address().toString().split(":")[1] + "&8)");
             } else {
-                p.sendMessage("$p &7Ip proxy: &anull &8(&70:0&8)");
+                p.sendMessage("$p &7RENDER-PROXY Ip proxy: &anull &8(&70:0&8)");
                 proxy = java.net.Proxy.NO_PROXY;
             }
             final Boolean ping = Boolean.parseBoolean(args[4]);
@@ -90,7 +90,7 @@ public class ConnectCommand extends Command {
                     //try {
                     host = resolvedIp.split(":")[0];
                     port = Integer.parseInt(resolvedIp.split(":")[1]);
-                    owner.sendMessage("$p &7Pobrano ip! &a" + host + ":" + port);
+                    owner.sendMessage("$p &7RENDER-PROXY Pobrano ip! &a" + host + ":" + port);
                     //} catch (ArrayIndexOutOfBoundsException e) {
                     //   host = argIp.split(":")[0];
                     //   port = Integer.parseInt(argIp.split(":")[1]);
@@ -106,21 +106,21 @@ public class ConnectCommand extends Command {
                 p.setLastPacketMs(0L);
                 if (p.getSessionConnect() != null) {
                     p.getSessionConnect().getListeners().forEach(l -> p.getSessionConnect().removeListener(l));
-                    p.getSessionConnect().disconnect("Nowa sesja.. Jesli chcesz zeby ci nie rozlaczalo bota uzywaj pierw ,detach, potem dopiero ,connect");
+                    p.getSessionConnect().disconnect("RENDER-PROXY Nowa sesja.. Jesli chcesz zeby ci nie rozlaczalo bota uzywaj pierw ,detach, potem dopiero ,connect");
                     p.setSessionConnect(null);
                 }
                 Client c = new Client(host, port, new MinecraftProtocol(nick), new TcpSessionFactory(proxy));
                 final long ms = System.currentTimeMillis();
                 c.getSession().setConnectTimeout(p.playerOptions.timeOutConnect);
                 if (ping) {
-                    p.sendMessage("$p &aPingowanie...");
+                    p.sendMessage("$p &aRENDER-PROXY Pingowanie...");
                     final MinecraftProtocol protocol = new MinecraftProtocol(SubProtocol.STATUS);
                     final Client client = new Client(host, port, protocol, new TcpSessionFactory(proxy));
                     client.getSession().setConnectTimeout(p.playerOptions.timeOutPing);
                     client.getSession().setFlag("server-info-handler", new ServerInfoHandler() {
                         @Override
                         public void handle(final Session session, final ServerStatusInfo info) {
-                            p.sendMessage("$p &7Zpingowano. &a[ Silnik serwera: &7" + info.getVersionInfo().getVersionName() + "&a, graczy: &7"
+                            p.sendMessage("$p &7ZRENDER-PROXY pingowano. &a[ Silnik serwera: &7" + info.getVersionInfo().getVersionName() + "&a, graczy: &7"
                                     + info.getPlayerInfo().getOnlinePlayers() + "&8/&7" + info.getPlayerInfo().getMaxPlayers() + "&a, motd: &7" +
                                     info.getDescription().getFullText() + " &a]");
                             p.sendMessage("$p &aSerwer odpowiedzial na ping w: &7" + (System.currentTimeMillis() - ms) + "ms");
@@ -134,7 +134,7 @@ public class ConnectCommand extends Command {
                     });
                     client.getSession().connect();
                 }
-                p.sendMessage("$p &aLacze z serwerem..");
+                p.sendMessage("$p &aRENDER-PROXY Lacze z serwerem..");
                 c.getSession().addListener(new SessionListener() {
                     @Override
                     public void disconnected(final DisconnectedEvent event) {
@@ -143,8 +143,8 @@ public class ConnectCommand extends Command {
                         if (event.getCause() != null) {
                             if (event.getReason().toLowerCase().contains("bot") || event.getReason().toLowerCase().contains("antybot")
                                     || event.getReason().toLowerCase().contains("wejdz")) {
-                                p.sendMessage("$p &c[AntyBot] &cBot &7" + profile2.getName() + " " +
-                                        "&czostal rozlaczony! &8(&cPowod: &7" + event.getReason() + "&c, cause: &7"
+                                p.sendMessage("$p &cRENDER-PROXY [AntyBot] &cBot &7" + profile2.getName() + " " +
+                                        "RENDER-PROXY &czostal rozlaczony! &8(&cPowod: &7" + event.getReason() + "&c, cause: &7"
                                         + event.getCause().getMessage() + "&8)");
                                 if (p.playerOptions.autoReconnect) {
                                     p.sendMessage("$p &aAutoReconnecting.. time: " + p.playerOptions.autoReconnectTime);
@@ -157,14 +157,14 @@ public class ConnectCommand extends Command {
                                 }
                             } else {
                                 p.sendMessage("$p &cBot &7" + profile2.getName() + " " +
-                                        "&czostal rozlaczony! &8(&cPowod: &7" + event.getReason() + "&c, cause: &7"
+                                        "&cRENDER-PROXY zostal rozlaczony! &8(&cPowod: &7" + event.getReason() + "&c, cause: &7"
                                         + event.getCause().getMessage() + "&8)");
                             }
                         } else {
                             if (event.getReason().toLowerCase().contains("bot") || event.getReason().toLowerCase().contains("antybot")
                                     || event.getReason().toLowerCase().contains("wejdz")) {
-                                p.sendMessage("$p &c[AntyBot] &cBot &7" + profile2.getName() + " " +
-                                        "&czostal rozlaczony! &8(&cPowod: &7" + event.getReason() + "&c, cause: &7"
+                                p.sendMessage("$p &cRENDER-PROXY [AntyBot] &cBot &7" + profile2.getName() + " " +
+                                        "&cRENDER-PROXY zostal rozlaczony! &8(&cPowod: &7" + event.getReason() + "&c, cause: &7"
                                         + event.getCause().getMessage() + "&8)");
                                 if (p.playerOptions.autoReconnect) {
                                     p.sendMessage("$p &aAutoReconnecting.. time: " + p.playerOptions.autoReconnectTime);
@@ -177,24 +177,24 @@ public class ConnectCommand extends Command {
                                 }
                             } else {
                                 p.sendMessage("$p &cBot &7" + profile2.getName() + " " +
-                                        "&czostal rozlaczony! &8(&cPowod: &7" + event.getReason() + "&c, cause: &7none&8)");
+                                        "&cRENDER-PROXY zostal rozlaczony! &8(&cPowod: &7" + event.getReason() + "&c, cause: &7none&8)");
                             }
                         }
                         if (p.getSessionConnect() != null) {
                             final GameProfile profilex = p.getSessionConnect().getFlag("profile");
                             if (profile2.getName().equals(profilex.getName())) {
                                 session.send(new ServerChatPacket(
-                                        ChatUtilities.fixColor("$p &cDisconnected from: &7" +
+                                        ChatUtilities.fixColor("$p &cRENDER-PROXY Disconnected from: &7" +
                                                 event.getSession().getHost() + " &8(" + event.getSession().getPort() + ")"),
                                         MessageType.NOTIFICATION));
                                 p.setSessionConnect(null);
                                 p.setLastPacketMs(0L);
                                 p.setConnected(false);
-                                p.setLastPacket("&cRozlaczono");
+                                p.setLastPacket("&cRENDER-PROXY Rozlaczono");
                                 //to chyba wywalic pozniej jak cos bedzie sie bugowac xd
                                 if (event.getReason().toLowerCase().contains("bot") || event.getReason().toLowerCase().contains("antybot")
                                         || event.getReason().toLowerCase().contains("wejdz")) {
-                                    p.sendMessage("$p &c[AntyBot] &cBot &7" + profile2.getName() + " " +
+                                    p.sendMessage("$p &cRENDER-PROXY [AntyBot] &cBot &7" + profile2.getName() + " " +
                                             "&czostal rozlaczony! &8(&cPowod: &7" + event.getReason() + "&c, cause: &7"
                                             + event.getCause().getMessage() + "&8)");
                                     if (p.playerOptions.autoReconnect) {
