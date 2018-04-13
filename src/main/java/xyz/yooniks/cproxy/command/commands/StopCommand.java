@@ -14,13 +14,13 @@ public class StopCommand extends Command {
     @Override
     public void onCommand(Player p, Command command, String[] args) {
         if (args.length < 2) {
-            p.sendMessage("$p &7Poprawne uzycie: &a" + getUsage());
+            p.sendMessage("$p &7RENDER-PROXY Poprawne uzycie: &a" + getUsage());
             return;
         }
         final String type = args[1];
         if (type.equalsIgnoreCase("chatbot") || type.equalsIgnoreCase("botchat")) {
             if (p.chatBotsSpamThread != null) {
-                p.sendMessage("$p &cProba stopowania taska z chatem od botow..");
+                p.sendMessage("$p &c RENDER-PROXY Proba stopowania taska z chatem od botow..");
                 p.chatBotsSpamThread.stop();
                 return;
             } else {
@@ -28,7 +28,7 @@ public class StopCommand extends Command {
             }
         } else if (type.equalsIgnoreCase("crashbot") || type.equalsIgnoreCase("botcrash")) {
             if (p.crashBotsThread != null) {
-                p.sendMessage("$p &cProba stopowania taska z crashem od botow..");
+                p.sendMessage("$p &cRENDER-PROXY Proba stopowania taska z crashem od botow..");
                 p.crashBotsThread.stop();
                 return;
             } else {
@@ -36,7 +36,7 @@ public class StopCommand extends Command {
             }
         } else if (type.equalsIgnoreCase("crash") || type.equalsIgnoreCase("crashplayer")) {
             if (p.crashPlayerThread != null) {
-                p.sendMessage("$p &cProba stopowania taska z crashem od playera..");
+                p.sendMessage("$p &c RENDER-PROXY Proba stopowania taska z crashem od playera..");
                 p.crashPlayerThread.stop();
                 return;
             } else {
@@ -44,7 +44,7 @@ public class StopCommand extends Command {
             }
         } else if (type.equalsIgnoreCase("macrobot") || type.equalsIgnoreCase("botmacro")) {
             if (!p.stopMacroBot) { //to kiedys tez zedytuje xd
-                p.sendMessage("$p &cProba stopowania taska z robieniem macra botow..");
+                p.sendMessage("$p &cRENDER-PROXY Proba stopowania taska z robieniem macra botow..");
                 p.stopMacroBot = true;
                 return;
             } else {
@@ -52,14 +52,14 @@ public class StopCommand extends Command {
             }
         } else if (type.equalsIgnoreCase("macro") || type.equalsIgnoreCase("macroplayer")) {
             if (!p.stopMacroPlayer) {
-                p.sendMessage("$p &cProba stopowania taska z robieniem macra playera.");
+                p.sendMessage("$p &cRENDER-PROXY Proba stopowania taska z robieniem macra playera.");
                 p.stopMacroPlayer = true;
                 return;
             } else {
-                p.sendMessage("$p &cTa opcja jest juz wlaczona!");
+                p.sendMessage("$p &cRENDER-PROXY Ta opcja jest juz wlaczona!");
             }
         } else {
-            p.sendMessage("$p &cNiepoprawny typ! &7(" + type + ")");
+            p.sendMessage("$p &cRENDER-PROXY Niepoprawny typ! &7(" + type + ")");
         }
     }
 }
